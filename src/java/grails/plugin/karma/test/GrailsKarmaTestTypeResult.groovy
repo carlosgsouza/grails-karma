@@ -11,14 +11,6 @@ import org.codehaus.groovy.grails.test.event.GrailsTestEventPublisher;
 
 class GrailsKarmaTestTypeResult implements GrailsTestTypeResult {
 
-	@Override
-	public int getPassCount() {
-		1
-	}
-
-	@Override
-	public int getFailCount() {
-		0
-	}
-
+	int passCount
+	int failCount
 }

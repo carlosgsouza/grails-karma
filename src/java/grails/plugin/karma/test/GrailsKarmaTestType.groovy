@@ -9,6 +9,10 @@ class GrailsKarmaTestType implements GrailsTestType {
 	
 	Binding buildBinding
 	String baseDir
+	File karmaExecutable
+	File karmaUnitConfig
+	
+	CommandRunner commandRunner = new CommandRunner()
 	
 	@Override
 	public String getName() {
@@ -25,32 +29,59 @@ class GrailsKarmaTestType implements GrailsTestType {
 		this.buildBinding = buildBinding
 		this.baseDir = buildBinding.grailsSettings.baseDir
 		
+		this.karmaExecutable = findExecutableOnPath("karma.cmd")
+		if(!karmaExecutable.exists()) {
+			println "Karma executable not found. Make sure it's on the PATH. Skippping Karma tests"
+			return 0
+		}
+		
+		this.karmaUnitConfig = new File("${baseDir}/grails-app/conf/karma/unit.conf.js")
+		if(!karmaExecutable.exists()) {
+			println "No config file found on ${karmaUnitConfig.absolutePath}"
+			return 0
+		}
+		
 		// Since Karma doesn't know the test engine, it's impossible to know from here how many tests will be executed. This number can be anything but 0
 		-1
 	}
 
 	@Override
 	public GrailsTestTypeResult run(GrailsTestEventPublisher eventPublisher) {
-		def karmaExec = "C:/Users/carlosags/AppData/Roaming/npm/karma.cmd"
-		def karmaConf = "${baseDir}/grails-app/conf/karma/unit.conf.js"
-			
-		def cmd = "$karmaExec start $karmaConf"
+		commandRunner.execute(karmaExecutable.absolutePath, "start", karmaUnitConfig.absolutePath)
 		
-		execute(cmd)
+		def reportPath = "${baseDir}/target/test-reports/karma-test-results.xml"
 		
-		def karmaReport = new XmlSlurper().parse("${baseDir}/target/test-reports/karma-test-results.xml")
-		def pass = Integer.valueOf karmaReport.testsuite[0].@tests.toString()
-		def fail = Integer.valueOf karmaReport.testsuite[0].@failures.toString()
-		
-		new GrailsKarmaTestTypeResult(passCount: pass, failCount: fail)
+		parseReportForResults(reportPath)
 	}
 	
-	def execute(cmd) {
-		def process = cmd.execute()
-		process.consumeProcessOutput(System.out, System.err)
-		process.waitFor()
+	def parseReportForResults(reportPath) {
+		def reportFile = new File(reportPath)
+		if(!reportFile.exists()) {
+			println "Could not find report on $reportPath"
+			return new GrailsKarmaTestTypeResult(passCount: 0, failCount: 0)
+		}
+		
+		
 	}
-
+	
+	private static File findExecutableOnPath(String executableName)
+	{
+		String systemPath = System.getenv("PATH");
+		String[] pathDirs = systemPath.split(File.pathSeparator);
+   
+		File fullyQualifiedExecutable = null;
+		for (String pathDir : pathDirs)
+		{
+			File file = new File(pathDir, executableName);
+			if (file.isFile())
+			{
+				fullyQualifiedExecutable = file;
+				break;
+			}
+		}
+		return fullyQualifiedExecutable;
+	}
+	
 	@Override
 	public void cleanup() {
 	}

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="PhantomJS 1.9 (Windows)" package="undefined" timestamp="2013-04-08T19:45:57" id="0" hostname="bhz01ntcarlos" tests="14" errors="0" failures="0" time="0.067">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.0 Safari/534.34"/>
+    </properties>
+    <testcase name="MetadataRules should be bring up from the JSON static file and MetadataFields should be bring up from backend." time="0.036" classname="PhantomJS 1.9 (Windows).MetadataUpdateCtrl"/>
+    <testcase name="metadataFields should be transformed into an array" time="0.005" classname="PhantomJS 1.9 (Windows).MetadataUpdateCtrl"/>
+    <testcase name="when the user try to submit a form without change any field." time="0.001" classname="PhantomJS 1.9 (Windows).MetadataUpdateCtrl check fields before the submit,"/>
+    <testcase name="verifying if the update JSON are in the correct format." time="0.004" classname="PhantomJS 1.9 (Windows).MetadataUpdateCtrl check fields before the submit,"/>
+    <testcase name="verifying if form is valid before sending." time="0.001" classname="PhantomJS 1.9 (Windows).MetadataUpdateCtrl check fields before the submit,"/>
+    <testcase name="Should get title when the title display &apos;testTitleSearch&apos; is searched." time="0.004" classname="PhantomJS 1.9 (Windows).TitleControllers Should request titles from back-end"/>
+    <testcase name="a thumbnail should be choice according the size chosen." time="0.002" classname="PhantomJS 1.9 (Windows).TitleControllers Should request titles from back-end"/>
+    <testcase name="pagination should be show or hide when the title search  result was paginated or not" time="0.001" classname="PhantomJS 1.9 (Windows).TitleControllers Should request titles from back-end"/>
+    <testcase name="requests should be perform when user try to navigate between pages on pagination" time="0.001" classname="PhantomJS 1.9 (Windows).TitleControllers"/>
+    <testcase name="when the user click over a title the popup should be displayed but if it had was marked for deletion nothing should be happens." time="0.005" classname="PhantomJS 1.9 (Windows).TitleControllers"/>
+    <testcase name="if titleDisplay have more than 40 charecters it should be displayed on the tooltip otherwise nothing should be displayerd" time="0.002" classname="PhantomJS 1.9 (Windows).TitleControllers"/>
+    <testcase name="when the title have more than 40 characters it should be splitted to get in this size and &quot;...&quot; should be concatenated with end of it." time="0.001" classname="PhantomJS 1.9 (Windows).TitleControllers"/>
+    <testcase name="when the user navigate between the pages in the pagination, sometimes some buttons should receive a hide class." time="0.002" classname="PhantomJS 1.9 (Windows).TitleControllers"/>
+    <testcase name="the date should be formatted with this pattern: dd/MM/yyyy HH:mm:ss" time="0.002" classname="PhantomJS 1.9 (Windows).TitleControllers"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+  <testsuite name="Chrome 26.0 (Windows)" package="undefined" timestamp="2013-04-08T19:45:57" id="0" hostname="bhz01ntcarlos" tests="14" errors="0" failures="0" time="0.069">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.43 Safari/537.31"/>
+    </properties>
+    <testcase name="MetadataRules should be bring up from the JSON static file and MetadataFields should be bring up from backend." time="0.028" classname="Chrome 26.0 (Windows).MetadataUpdateCtrl"/>
+    <testcase name="metadataFields should be transformed into an array" time="0.013" classname="Chrome 26.0 (Windows).MetadataUpdateCtrl"/>
+    <testcase name="when the user try to submit a form without change any field." time="0.002" classname="Chrome 26.0 (Windows).MetadataUpdateCtrl check fields before the submit,"/>
+    <testcase name="verifying if the update JSON are in the correct format." time="0.003" classname="Chrome 26.0 (Windows).MetadataUpdateCtrl check fields before the submit,"/>
+    <testcase name="verifying if form is valid before sending." time="0.001" classname="Chrome 26.0 (Windows).MetadataUpdateCtrl check fields before the submit,"/>
+    <testcase name="Should get title when the title display &apos;testTitleSearch&apos; is searched." time="0.005" classname="Chrome 26.0 (Windows).TitleControllers Should request titles from back-end"/>
+    <testcase name="a thumbnail should be choice according the size chosen." time="0.001" classname="Chrome 26.0 (Windows).TitleControllers Should request titles from back-end"/>
+    <testcase name="pagination should be show or hide when the title search  result was paginated or not" time="0.002" classname="Chrome 26.0 (Windows).TitleControllers Should request titles from back-end"/>
+    <testcase name="requests should be perform when user try to navigate between pages on pagination" time="0.003" classname="Chrome 26.0 (Windows).TitleControllers"/>
+    <testcase name="when the user click over a title the popup should be displayed but if it had was marked for deletion nothing should be happens." time="0.002" classname="Chrome 26.0 (Windows).TitleControllers"/>
+    <testcase name="if titleDisplay have more than 40 charecters it should be displayed on the tooltip otherwise nothing should be displayerd" time="0.001" classname="Chrome 26.0 (Windows).TitleControllers"/>
+    <testcase name="when the title have more than 40 characters it should be splitted to get in this size and &quot;...&quot; should be concatenated with end of it." time="0.002" classname="Chrome 26.0 (Windows).TitleControllers"/>
+    <testcase name="when the user navigate between the pages in the pagination, sometimes some buttons should receive a hide class." time="0.002" classname="Chrome 26.0 (Windows).TitleControllers"/>
+    <testcase name="the date should be formatted with this pattern: dd/MM/yyyy HH:mm:ss" time="0.004" classname="Chrome 26.0 (Windows).TitleControllers"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>

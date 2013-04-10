@@ -8,11 +8,16 @@ import org.codehaus.groovy.grails.test.event.GrailsTestEventPublisher
 class GrailsKarmaTestType implements GrailsTestType {
 	
 	Binding buildBinding
-	String baseDir
 	File karmaExecutable
 	File karmaUnitConfig
 	
+	def fileHelper
+	
 	CommandRunner commandRunner = new CommandRunner()
+	
+	public GrailsKarmaTestType() {
+		this.fileHelper = new FileHelper()
+	}
 	
 	@Override
 	public String getName() {
@@ -21,23 +26,26 @@ class GrailsKarmaTestType implements GrailsTestType {
 
 	@Override
 	public String getRelativeSourcePath() {
-		""
+		"js-unit"
+	}
+	
+	private String getBaseDir() {
+		buildBinding.getVariable("baseDir")
 	}
 
 	@Override
 	public int prepare(GrailsTestTargetPattern[] testTargetPatterns, File compiledClassesDir, Binding buildBinding) {
 		this.buildBinding = buildBinding
-		this.baseDir = buildBinding.grailsSettings.baseDir
 		
-		this.karmaExecutable = findExecutableOnPath("karma.cmd")
-		if(!karmaExecutable.exists()) {
-			println "Karma executable not found. Make sure it's on the PATH. Skippping Karma tests"
+		this.karmaExecutable = fileHelper.findExecutableOnPath("karma.cmd")
+		if(!karmaExecutable?.exists()) {
+			System.err.println "Karma executable not found. Make sure it's on the PATH. Skippping Karma tests"
 			return 0
 		}
 		
-		this.karmaUnitConfig = new File("${baseDir}/grails-app/conf/karma/unit.conf.js")
-		if(!karmaExecutable.exists()) {
-			println "No config file found on ${karmaUnitConfig.absolutePath}"
+		this.karmaUnitConfig = fileHelper.open("${baseDir}/grails-app/conf/karma/unit.conf.js")
+		if(!karmaUnitConfig?.exists()) {
+			System.err.println "No config file found on ${karmaUnitConfig.absolutePath}"
 			return 0
 		}
 		
@@ -48,10 +56,10 @@ class GrailsKarmaTestType implements GrailsTestType {
 	@Override
 	public GrailsTestTypeResult run(GrailsTestEventPublisher eventPublisher) {
 		commandRunner.execute(karmaExecutable.absolutePath, "start", karmaUnitConfig.absolutePath)
+		def reportPath = "${baseDir}/target/test-reports/karma/unit-test-results.xml"
+		def report = parseReportForResults(reportPath)
 		
-		def reportPath = "${baseDir}/target/test-reports/karma-test-results.xml"
-		
-		parseReportForResults(reportPath)
+		new GrailsKarmaTestTypeResult(report)
 	}
 	
 	def parseReportForResults(reportPath) {
@@ -61,26 +69,9 @@ class GrailsKarmaTestType implements GrailsTestType {
 			return new GrailsKarmaTestTypeResult(passCount: 0, failCount: 0)
 		}
 		
-		
+		new JUnitReportParser(reportFile)
 	}
 	
-	private static File findExecutableOnPath(String executableName)
-	{
-		String systemPath = System.getenv("PATH");
-		String[] pathDirs = systemPath.split(File.pathSeparator);
-   
-		File fullyQualifiedExecutable = null;
-		for (String pathDir : pathDirs)
-		{
-			File file = new File(pathDir, executableName);
-			if (file.isFile())
-			{
-				fullyQualifiedExecutable = file;
-				break;
-			}
-		}
-		return fullyQualifiedExecutable;
-	}
 	
 	@Override
 	public void cleanup() {

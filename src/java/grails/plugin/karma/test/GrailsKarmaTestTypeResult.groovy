@@ -10,7 +10,6 @@ import org.codehaus.groovy.grails.test.GrailsTestTypeResult;
 import org.codehaus.groovy.grails.test.event.GrailsTestEventPublisher;
 
 class GrailsKarmaTestTypeResult implements GrailsTestTypeResult {
-
 	int passCount
 	int failCount
 }

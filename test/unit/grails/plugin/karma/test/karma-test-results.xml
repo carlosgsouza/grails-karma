@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="PhantomJS 1.9 (Windows)" package="undefined" timestamp="2013-04-08T19:45:57" id="0" hostname="bhz01ntcarlos" tests="14" errors="0" failures="0" time="0.067">
+  <testsuite name="PhantomJS 1.9 (Windows)" package="undefined" timestamp="2013-04-08T19:45:57" id="0" hostname="bhz01ntcarlos" tests="14" errors="2" failures="3" time="0.067">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.0 Safari/534.34"/>
     </properties>

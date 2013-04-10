@@ -10,19 +10,19 @@ import org.codehaus.groovy.grails.test.report.junit.JUnitReports;
 
 import spock.lang.Specification;
 
-class JunitReportSpec extends Specification {
+class JunitReportParserSpec extends Specification {
 	def "should parse a junit report"() {
 		given:
 		def thisClassFolder = new File(getClass().getResource("").getPath())
-		
 		def junitReportFile = new File(thisClassFolder, "karma-test-results.xml")
 		
 		when:
-		def report = new JUnitReport(junitReportFile)
+		def result = new JUnitReportParser().parse(junitReportFile)
 		
 		then:
-		report.tests == 28
-		report.failures == 0
-		report.errors == 0
+		result.failCount == 5
+		result.passCount == 23
 	}
 }
+
+

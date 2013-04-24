@@ -43,7 +43,6 @@ class GrailsKarmaTestTypeSpec extends Specification {
 		def existantFile = new File(".")
 		Binding bindingMock = Mock()
 		
-		
 		and:
 		testType.fileHelper = Mock(FileHelper)
 		
@@ -57,5 +56,33 @@ class GrailsKarmaTestTypeSpec extends Specification {
 		
 		and:
 		result == 0
+	}
+	
+	def "shoud run the karma executable and parse the reports"() {
+		given:
+		def test = new GrailsKarmaTestType()
+		test.commandRunner = Mock(CommandRunner)
+		test.reportParser = Mock(JUnitReportParser)
+		test.buildBinding = Mock(Binding)
+		
+		and:
+		test.karmaExecutable = new File("/path/to/karma/executable")
+		test.karmaUnitConfig = new File("/path/to/karma/unit/config")
+		
+		and:
+		GrailsKarmaTestTypeResult expectedResult = Mock()
+		
+		GrailsTestEventPublisher unusedEventPublisher = Mock()
+		
+		when:
+		def result = test.run(unusedEventPublisher)
+		
+		then:
+		0 * unusedEventPublisher._
+		1 * test.commandRunner.execute(test.karmaExecutable.absolutePath, "start", test.karmaUnitConfig.absolutePath)
+		1 * test.reportParser.parse("$test.baseDir/target/test-reports/karma/unit-test-results.xml") >> expectedResult
+		
+		and:
+		result == expectedResult
 	}
 }

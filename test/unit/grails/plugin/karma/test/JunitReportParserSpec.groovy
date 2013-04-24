@@ -15,9 +15,10 @@ class JunitReportParserSpec extends Specification {
 		given:
 		def thisClassFolder = new File(getClass().getResource("").getPath())
 		def junitReportFile = new File(thisClassFolder, "karma-test-results.xml")
+		def junitReportFilePath = junitReportFile.absolutePath
 		
 		when:
-		def result = new JUnitReportParser().parse(junitReportFile)
+		def result = new JUnitReportParser().parse(junitReportFilePath)
 		
 		then:
 		result.failCount == 5

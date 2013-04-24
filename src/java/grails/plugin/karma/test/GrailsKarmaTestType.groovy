@@ -11,12 +11,14 @@ class GrailsKarmaTestType implements GrailsTestType {
 	File karmaExecutable
 	File karmaUnitConfig
 	
-	def fileHelper
-	
-	CommandRunner commandRunner = new CommandRunner()
+	FileHelper fileHelper
+	JUnitReportParser reportParser
+	CommandRunner commandRunner
 	
 	public GrailsKarmaTestType() {
 		this.fileHelper = new FileHelper()
+		this.reportParser = new JUnitReportParser()
+		this.commandRunner = new CommandRunner()
 	}
 	
 	@Override
@@ -55,23 +57,17 @@ class GrailsKarmaTestType implements GrailsTestType {
 
 	@Override
 	public GrailsTestTypeResult run(GrailsTestEventPublisher eventPublisher) {
-		commandRunner.execute(karmaExecutable.absolutePath, "start", karmaUnitConfig.absolutePath)
-		def reportPath = "${baseDir}/target/test-reports/karma/unit-test-results.xml"
-		def report = parseReportForResults(reportPath)
+		try {
+			commandRunner.execute(karmaExecutable.absolutePath, "start", karmaUnitConfig.absolutePath)
 		
-		new GrailsKarmaTestTypeResult(report)
-	}
-	
-	def parseReportForResults(reportPath) {
-		def reportFile = new File(reportPath)
-		if(!reportFile.exists()) {
-			println "Could not find report on $reportPath"
+			def reportPath = "${baseDir}/target/test-reports/karma/unit-test-results.xml"
+			return reportParser.parse(reportPath)
+			
+		} catch(e) {
+			println "Unable to execute tests. Failed with message $e.message"
 			return new GrailsKarmaTestTypeResult(passCount: 0, failCount: 0)
 		}
-		
-		new JUnitReportParser(reportFile)
 	}
-	
 	
 	@Override
 	public void cleanup() {

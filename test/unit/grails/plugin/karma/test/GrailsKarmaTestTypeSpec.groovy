@@ -51,11 +51,35 @@ class GrailsKarmaTestTypeSpec extends Specification {
 		
 		then:
 		1 * testType.fileHelper.findExecutableOnPath("karma.cmd") >> existantFile
-		1 * bindingMock.getVariable("baseDir") >> "base_dir"
+		1 * bindingMock.getVariable("basedir") >> "base_dir"
 		1 * testType.fileHelper.open( { it ==~ "base_dir/.*conf.js" } ) >> new File("this/file/doesnt/exist")
 		
 		and:
 		result == 0
+	}
+	
+	def "should return the number of files in the test folder"() {
+		given: 
+		def testType = new GrailsKarmaTestType()
+		def existingFile = new File(".")
+		
+		and:
+		Binding bindingMock = Mock()
+		bindingMock.getVariable("basedir") >> "base_dir"
+		
+		and:
+		testType.fileHelper = Mock(FileHelper)
+		
+		when:
+		def result = testType.prepare(null, null, bindingMock)
+		
+		then:
+		1 * testType.fileHelper.findExecutableOnPath("karma.cmd") >> existingFile
+		1 * testType.fileHelper.open( { it ==~ ".*conf.js" } ) >> existingFile
+		1 * testType.fileHelper.countJsFiles("base_dir/test/js-unit/") >> 67
+		
+		and:
+		result == 67
 	}
 	
 	def "shoud run the karma executable and parse the reports"() {
@@ -79,7 +103,7 @@ class GrailsKarmaTestTypeSpec extends Specification {
 		
 		then:
 		0 * unusedEventPublisher._
-		1 * test.commandRunner.execute(test.karmaExecutable.absolutePath, "start", test.karmaUnitConfig.absolutePath)
+		1 * test.commandRunner.execute(test.karmaExecutable.absolutePath, "start", test.karmaUnitConfig.absolutePath, "--no-auto-watch", "--single-run")
 		1 * test.reportParser.parse("$test.baseDir/target/test-reports/karma/unit-test-results.xml") >> expectedResult
 		
 		and:

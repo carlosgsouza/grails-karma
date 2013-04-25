@@ -32,7 +32,7 @@ class GrailsKarmaTestType implements GrailsTestType {
 	}
 	
 	private String getBaseDir() {
-		buildBinding.getVariable("baseDir")
+		buildBinding.getVariable("basedir")
 	}
 
 	@Override
@@ -51,14 +51,17 @@ class GrailsKarmaTestType implements GrailsTestType {
 			return 0
 		}
 		
-		// Since Karma doesn't know the test engine, it's impossible to know from here how many tests will be executed. This number can be anything but 0
-		-1
+		return numberOfTestFiles
+	}
+	
+	int getNumberOfTestFiles() {
+		fileHelper.countJsFiles("$baseDir/test/js-unit/")
 	}
 
 	@Override
 	public GrailsTestTypeResult run(GrailsTestEventPublisher eventPublisher) {
 		try {
-			commandRunner.execute(karmaExecutable.absolutePath, "start", karmaUnitConfig.absolutePath)
+			commandRunner.execute(karmaExecutable.absolutePath, "start", karmaUnitConfig.absolutePath, "--no-auto-watch", "--single-run")
 		
 			def reportPath = "${baseDir}/target/test-reports/karma/unit-test-results.xml"
 			return reportParser.parse(reportPath)

@@ -31,4 +31,16 @@ class FileHelper {
 		new File(path)
 	}
 	
+	int countJsFiles(String path) {
+		def jsUnitTestsDir = new File(path)
+		
+		def count = 0
+		jsUnitTestsDir.eachFileRecurse {
+			if(it?.name.toLowerCase() ==~ /.*js/) {
+				count++
+			}
+		}
+		count
+	}
+	
 }

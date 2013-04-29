@@ -13,8 +13,7 @@ import spock.lang.Specification;
 class JunitReportParserSpec extends Specification {
 	def "should parse a junit report"() {
 		given:
-		def thisClassFolder = new File(getClass().getResource("").getPath())
-		def junitReportFile = new File(thisClassFolder, "karma-test-results.xml")
+		def junitReportFile = new File("test/unit/resources/karma-test-results.xml")
 		def junitReportFilePath = junitReportFile.absolutePath
 		
 		when:

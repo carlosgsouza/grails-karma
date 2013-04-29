@@ -2,8 +2,8 @@ package grails.plugin.karma.test
 
 class CommandRunner {
 	
-	def execute(executablePath) {
-		def process = executablePath.execute()
+	def execute(cmd) {
+		def process = cmd.execute()
 		process.consumeProcessOutput(System.out, System.err)
 		process.waitFor()
 	}

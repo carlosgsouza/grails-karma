@@ -9,8 +9,19 @@ eventAllTestsStart = {
 		binding.variables["unitTests"] = []
 	}
 	
-	binding.variables["unitTests"] << new GrailsKarmaTestType()
+	binding.variables["unitTests"] << new GrailsKarmaTestType("unit")
+	
+	if(!phasesToRun.contains("functional")) {
+		phasesToRun << "functional"
+	}
+	
+	if(!binding.variables["functionalTests"]) {
+		binding.variables["functionalTests"] = []
+	}
+	
+	binding.variables["functionalTests"] << new GrailsKarmaTestType("functional")
 }
+
 
 
 

@@ -7,18 +7,20 @@ import org.codehaus.groovy.grails.test.event.GrailsTestEventPublisher
 
 class GrailsKarmaTestType implements GrailsTestType {
 	
+	String testPhase
 	Binding buildBinding
 	File karmaExecutable
-	File karmaUnitConfig
+	File karmaConfigFile
 	
 	FileHelper fileHelper
 	JUnitReportParser reportParser
 	CommandRunner commandRunner
 	
-	public GrailsKarmaTestType() {
+	public GrailsKarmaTestType(String testPhase) {
 		this.fileHelper = new FileHelper()
 		this.reportParser = new JUnitReportParser()
 		this.commandRunner = new CommandRunner()
+		this.testPhase = testPhase
 	}
 	
 	@Override
@@ -28,7 +30,7 @@ class GrailsKarmaTestType implements GrailsTestType {
 
 	@Override
 	public String getRelativeSourcePath() {
-		"js-unit"
+		(this.testPhase && this.testPhase == "unit") ? "js-unit" : "js-functional" 
 	}
 	
 	private String getBaseDir() {
@@ -45,25 +47,29 @@ class GrailsKarmaTestType implements GrailsTestType {
 			return 0
 		}
 		
-		this.karmaUnitConfig = fileHelper.open("${baseDir}/grails-app/conf/karma/unit.conf.js")
-		if(!karmaUnitConfig?.exists()) {
-			System.err.println "No config file found on ${karmaUnitConfig.absolutePath}"
+		this.karmaConfigFile = fileHelper.open("${baseDir}/grails-app/conf/karma/${karmaConfigFileName}")
+		if(!karmaConfigFile?.exists()) {
+			System.err.println "No config file found on ${karmaConfigFile.absolutePath}"
 			return 0
 		}
-		
+		println testPhase
 		return numberOfTestFiles
 	}
 	
+	String getKarmaConfigFileName(){
+		(this.testPhase && this.testPhase == "unit") ? "unit.conf.js" : "functional.conf.js"
+	}
+	
 	int getNumberOfTestFiles() {
-		fileHelper.countJsFiles("$baseDir/test/js-unit/")
+		fileHelper.countJsFiles("$baseDir/test/${relativeSourcePath}/")
 	}
 
 	@Override
 	public GrailsTestTypeResult run(GrailsTestEventPublisher eventPublisher) {
 		try {
-			commandRunner.execute(karmaExecutable.absolutePath, "start", karmaUnitConfig.absolutePath, "--no-auto-watch", "--single-run")
+			commandRunner.execute(karmaExecutable.absolutePath, "start", karmaConfigFile.absolutePath, "--no-auto-watch", "--single-run")
 		
-			def reportPath = "${baseDir}/target/test-reports/karma/unit-test-results.xml"
+			def reportPath = "${baseDir}/target/test-reports/karma/${testPhase}-test-results.xml"
 			return reportParser.parse(reportPath)
 			
 		} catch(e) {

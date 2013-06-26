@@ -1,6 +1,17 @@
-import grails.plugin.karma.test.GrailsKarmaTestType
- 
+loadGrailsKarmaTestTypeClass = { ->
+	def doLoad = { -> classLoader.loadClass('grails.plugin.karma.test.GrailsKarmaTestType') }
+	try {
+	  doLoad()
+	} catch (ClassNotFoundException e) {
+	  includeTargets << grailsScript("_GrailsCompile")
+	  compile()
+	  doLoad()
+	}
+}
+
 eventAllTestsStart = {
+	def grailsKarmaTestTypeClass = loadGrailsKarmaTestTypeClass()
+	
 	if(!phasesToRun.contains("unit")) {
 		phasesToRun << "unit"
 	}
@@ -9,7 +20,7 @@ eventAllTestsStart = {
 		binding.variables["unitTests"] = []
 	}
 	
-	binding.variables["unitTests"] << new GrailsKarmaTestType("unit")
+	binding.variables["unitTests"] << grailsKarmaTestTypeClass.newInstance("unit")
 	
 	if(!phasesToRun.contains("functional")) {
 		phasesToRun << "functional"
@@ -19,7 +30,7 @@ eventAllTestsStart = {
 		binding.variables["functionalTests"] = []
 	}
 	
-	binding.variables["functionalTests"] << new GrailsKarmaTestType("functional")
+	binding.variables["functionalTests"] << grailsKarmaTestTypeClass.newInstance("functional")
 }
 
 

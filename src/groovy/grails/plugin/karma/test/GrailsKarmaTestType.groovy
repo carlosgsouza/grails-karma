@@ -1,12 +1,14 @@
 package grails.plugin.karma.test
 
+import java.util.logging.Logger
+
 import org.codehaus.groovy.grails.test.GrailsTestTargetPattern
 import org.codehaus.groovy.grails.test.GrailsTestType
 import org.codehaus.groovy.grails.test.GrailsTestTypeResult
 import org.codehaus.groovy.grails.test.event.GrailsTestEventPublisher
 
 class GrailsKarmaTestType implements GrailsTestType {
-	
+	def log;
 	String testPhase
 	Binding buildBinding
 	File karmaExecutable
@@ -52,7 +54,7 @@ class GrailsKarmaTestType implements GrailsTestType {
 			System.err.println "No config file found on ${karmaConfigFile.absolutePath}"
 			return 0
 		}
-		println testPhase
+		println "Running JS ${testPhase} tests with this config file: ${karmaConfigFile.absolutePath}"
 		return numberOfTestFiles
 	}
 	
@@ -68,13 +70,12 @@ class GrailsKarmaTestType implements GrailsTestType {
 	public GrailsTestTypeResult run(GrailsTestEventPublisher eventPublisher) {
 		try {
 			commandRunner.execute(karmaExecutable.absolutePath, "start", karmaConfigFile.absolutePath, "--no-auto-watch", "--single-run")
-		
 			def reportPath = "${baseDir}/target/test-reports/karma/${testPhase}-test-results.xml"
 			return reportParser.parse(reportPath)
 			
 		} catch(e) {
 			println "Unable to execute tests. Failed with message $e.message"
-			return new GrailsKarmaTestTypeResult(passCount: 0, failCount: 0)
+			return 0
 		}
 	}
 	

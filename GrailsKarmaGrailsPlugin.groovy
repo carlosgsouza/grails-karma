@@ -10,7 +10,6 @@ class GrailsKarmaGrailsPlugin {
         "grails-app/views/error.gsp"
     ]
 
-    // TODO Fill in these fields
     def title = "Grails Karma Plugin" // Headline display name of the plugin
     def author = "Carlos Souza"
     def authorEmail = "carlosgsouza@gmail.com"

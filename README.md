@@ -16,10 +16,6 @@ Just put your test files under the <code>test/js-unit/</code> or <code>test/js-f
 You can also use <code>grails test-app karma:unit</code> or <code>grails test-app karma:functional</code> to execute tests form a specific phase.
 
 ## Configuration
-By default, grails-karma has a functional out of the box configuration for unit and functional tests. 
-It uses [Jasmine](http://pivotal.github.io/jasmine/) to execute the tests and [Angular](http://docs.angularjs.org/guide/dev_guide.e2e-testing) to interact with the browser on functional tests.
-
-Any changes in the configuration can be made in the <code>unit.conf.js</code> and <code>functional.conf.js</code> files under <code>conf/karma</code>. 
-There is a few things though that must be kept so the plugin can work properly:
-* The entires <code>test/js-unit/**/*.js</code> and <code>test/js-functional/**/*.js</code> should't be removed form the list of included files of their respective tests
-* The report output .. (TODO)
+The default karma configuration uses [Jasmine](http://pivotal.github.io/jasmine/) as the testing framework and [Angular](http://docs.angularjs.org/guide/dev_guide.e2e-testing) to interact with the browser on functional tests.
+You can change any settings in the <code>unit.conf.js</code> and <code>functional.conf.js</code> files under <code>conf/karma</code>. 
+There are only a few items, followed by a <code>// can't touch this</code> comment, which the plugin relies on and should be left alone.

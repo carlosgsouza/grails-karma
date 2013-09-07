@@ -28,68 +28,39 @@
         </ul>
       </header>
       <section>
-        <h1>
-<a name="grails-karma" class="anchor" href="#grails-karma"><span class="octicon octicon-link"></span></a>grails-karma</h1>
-
-<p>Run javascript tests in the Grails build!</p>
-
-<p>The main goal for Karma is to bring a productive testing environment to developers. Grails-karma allows Grails developers to use this spectacular tool in their application so they can write unit and functional tests in Javascript and execute them in the build.</p>
+        <p>The main goal for Karma is to bring a productive environment for javascript testing. 
+The grails-karma plugin integrates this spectacular tool with Grails so unit and functional tests written in javascript can be executed during the build.</p>
 
 <h2>
 <a name="instalation" class="anchor" href="#instalation"><span class="octicon octicon-link"></span></a>Instalation</h2>
 
-<p>First, install and configure Karma as described in <a href="http://karma-runner.github.io/0.10/index.html">Karma's official documentation</a>.</p>
-
-<p>After you have karma running on your machine, you can install the grails-karma plugin by adding this dependency to your BuildConfig.groovy</p>
-
-<blockquote>
-<p>code here</p>
-</blockquote>
-
-<p>or using the install-plugin command</p>
-
-<blockquote>
-<p>grails install-plugin grails-karma</p>
-</blockquote>
-
-<p>When installed, grails-karma will create the following files in your project tree</p>
-
-<blockquote>
-<p>config files</p>
-</blockquote>
-
-<p>the following directories will also be created:</p>
-
-<blockquote>
-<p>js-unit and functional</p>
-</blockquote>
-
-<p>For grails-karma to function properly, please make sure you have karma on your path.</p>
-
-<h2>
-<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
-
-<p>grails-karma itself doesn't need to be configured. All configuration is made using karma configuration files under the conf/karma directory. These files have a very useful default configuration. Please refer to the karma official documentation(<a href="http://karma-runner.github.io/0.10/index.html">http://karma-runner.github.io/0.10/index.html</a>) for more information.</p>
-
-<p>You may configure your karma tests they way you want by changing the configuration files under conf/karma. However, make sure you don't change any of the following configuration parameters used by the plugin:</p>
-
-<blockquote>
-<p>test-report</p>
-</blockquote>
+<p>First, install Karma as described in the <a href="http://karma-runner.github.io/0.10/index.html">Karma's official documentation</a>. 
+Make sure karma is on your path and working properly.
+Then execute the following command to install the grails-karma plugin <code>grails install-plugin grails-karma</code>.</p>
 
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>To run the karma plugin, use </p>
+<p>grails-karma is ready to be executed right after its installation. 
+Just put your test files under the <code>test/js-unit/</code> or <code>test/js-functional/</code> directories and execute <code>grails test-app</code>.
+You can also use <code>grails test-app karma:unit</code> or <code>grails test-app karma:functional</code> to execute tests form a specific phase.</p>
 
-<blockquote>
-<p>grails test-app karma:unit
-grails test-app karma:functional</p>
-</blockquote>
+<p><em>During development, I recommend using karma directly form the command line since it will execute tests for you as you change your files.</em></p>
 
-<p>or simply grails test-app</p>
+<h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
 
-<p>By default, grails-karma will look for javascript tests under the directories js-unit and js-functional and for javascript code under the directory …</p>
+<p>The default karma configuration uses <a href="http://pivotal.github.io/jasmine/">Jasmine</a> as the testing framework and <a href="http://docs.angularjs.org/guide/dev_guide.e2e-testing">Angular</a> to interact with the browser on functional tests.
+You can change any settings in the <code>unit.conf.js</code> and <code>functional.conf.js</code> files under <code>conf/karma</code>. 
+There are only a few items, followed by a <code>// can't touch this</code> comment, which the plugin relies on and should be left alone.</p>
+
+<p><em>Don't worry aobut setting <code>autoWatch</code>. grails-karma will override this option so tests are executed only once during the Grails build.</em></p>
+
+<h2>
+<a name="about-this-project" class="anchor" href="#about-this-project"><span class="octicon octicon-link"></span></a>About this project</h2>
+
+<p>This is just the first version of this plugin and we are couting on your feedback to make this plugin better! 
+Don't hesitate to send us an e-mail, create an issue on GitHub or, even better, submit a pull request. </p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/carlosgsouza">carlosgsouza</a></p>

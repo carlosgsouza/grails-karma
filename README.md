@@ -25,4 +25,5 @@ There are only a few items, followed by a <code>// can't touch this</code> comme
 *Don't worry aobut setting <code>autoWatch</code>. grails-karma will override this option so tests are executed only once during the Grails build.*
 
 ## About this project
-This is just the first version of this plugin. If you have any problems, suggestions or complaints, please drop us an e-mail or raise an issue in the grails-karma github page. We are couting on your feedback to make this plugin better!
+This is just the first version of this plugin and we are couting on your feedback to make this plugin better! 
+Don't hesitate to send us an e-mail, create an issue on GitHub or, even better, submit a pull request. 

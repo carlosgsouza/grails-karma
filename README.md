@@ -6,20 +6,16 @@ The main goal for Karma is to bring a productive environment for javascript test
 The grails-karma plugin integrates this spectacular tool with Grails so unit and functional tests written in javascript can be executed during the build.
 
 ## Instalation
-First, install Karma as described in the [Karma's official documentation](http://karma-runner.github.io/0.10/index.html). Make sure karma is on your path and that you can execute tests using karma directly.
+First, install Karma as described in the [Karma's official documentation](http://karma-runner.github.io/0.10/index.html). 
+Make sure karma is on your path and working properly.
 Then execute the following command to install the grails-karma plugin <code>grails install-plugin grails-karma</code>.
 
 When installed, the configuration files for karma will be created under <code>conf/karma</code>. Also, two folders for will be created for your test code: <code>test/js-unit</code> and <code>test/js-functional</code>
 
 ## Usage
 grails-karma is ready to be executed right after its installation. 
-To run the karma plugin, use 
-> grails test-app karma:unit
-> grails test-app karma:functional
-
-or simply grails test-app
-will look for javascript tests under the directories js-unit and js-functional and for javascript code under the directory …
-
+Just put your test files under the <code>test/js-unit/</code> or <code>test/js-functional/</code> directories and execute <code>grails test-app</code>.
+You can also use <code>grails test-app karma:unit</code> or <code>grails test-app karma:functional</code> to execute tests form a specific phase.
 
 ## Configuration
 By default, grails-karma has a functional out of the box configuration for unit and functional tests. 

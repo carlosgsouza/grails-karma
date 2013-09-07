@@ -23,3 +23,6 @@ You can change any settings in the <code>unit.conf.js</code> and <code>functiona
 There are only a few items, followed by a <code>// can't touch this</code> comment, which the plugin relies on and should be left alone.
 
 *Don't worry aobut setting <code>autoWatch</code>. grails-karma will override this option so tests are executed only once during the Grails build.*
+
+## About this project
+This is just the first version of this plugin. If you have any problems, suggestions or complaints, please drop us an e-mail or raise an issue in the grails-karma github page. We are couting on your feedback to make this plugin better!

@@ -10,8 +10,6 @@ First, install Karma as described in the [Karma's official documentation](http:/
 Make sure karma is on your path and working properly.
 Then execute the following command to install the grails-karma plugin <code>grails install-plugin grails-karma</code>.
 
-When installed, the configuration files for karma will be created under <code>conf/karma</code>. Also, two folders for will be created for your test code: <code>test/js-unit</code> and <code>test/js-functional</code>
-
 ## Usage
 grails-karma is ready to be executed right after its installation. 
 Just put your test files under the <code>test/js-unit/</code> or <code>test/js-functional/</code> directories and execute <code>grails test-app</code>.

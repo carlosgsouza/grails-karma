@@ -164,3 +164,9 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+#################
+## Project Specific
+#################
+plugin.xml
+grails-grails-karma*.zip

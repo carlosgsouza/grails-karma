@@ -75,7 +75,7 @@ class GrailsKarmaTestType implements GrailsTestType {
 			
 		} catch(e) {
 			println "Unable to execute tests. Failed with message $e.message"
-			return 0
+			new GrailsKarmaTestTypeResult(failCount: 1, passCount: 0)
 		}
 	}
 	

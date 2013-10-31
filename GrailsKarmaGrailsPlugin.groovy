@@ -1,5 +1,5 @@
 class GrailsKarmaGrailsPlugin {
-    def version = "0.1.21"
+    def version = "0.1.22"
     def grailsVersion = "1.3 > *"
     def dependsOn = [:]
     def pluginExcludes = ["grails-app/views/error.gsp"]

@@ -44,14 +44,18 @@ class GrailsKarmaTestType implements GrailsTestType {
 		this.buildBinding = buildBinding
 		
 		this.karmaExecutable = fileHelper.findExecutableOnPath("karma.cmd")
-		if(!karmaExecutable?.exists()) {
-			System.err.println "Karma executable not found. Make sure it's on the PATH. Skippping Karma tests"
-			return 0
+		if(!karmaExecutable?.exists()) { 
+			this.karmaExecutable = fileHelper.findExecutableOnPath("karma")
+			
+			if(!karmaExecutable?.exists()) {
+				println "Karma executable not found. Make sure it's on the PATH. Skippping Karma tests"
+				return 0
+			}
 		}
 		
 		this.karmaConfigFile = fileHelper.open("${baseDir}/grails-app/conf/karma/${karmaConfigFileName}")
 		if(!karmaConfigFile?.exists()) {
-			System.err.println "No config file found on ${karmaConfigFile.absolutePath}"
+			println "No config file found on ${karmaConfigFile.absolutePath}"
 			return 0
 		}
 		println "Running JS ${testPhase} tests with this config file: ${karmaConfigFile.absolutePath}"

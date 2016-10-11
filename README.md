@@ -18,7 +18,7 @@ You can also use <code>grails test-app karma:unit</code> or <code>grails test-ap
 *During development, I recommend using karma directly form the command line since it will execute tests for you as you change your files.*
 
 ## Configuration
-The default karma configuration uses [Jasmine](http://pivotal.github.io/jasmine/) as the testing framework and [Angular](http://docs.angularjs.org/guide/dev_guide.e2e-testing) to interact with the browser on functional tests.
+The default karma configuration uses [Jasmine](https://jasmine.github.io/) as the testing framework and [Angular](http://docs.angularjs.org/guide/dev_guide.e2e-testing) to interact with the browser on functional tests.
 You can change any settings in the <code>unit.conf.js</code> and <code>functional.conf.js</code> files under <code>conf/karma</code>. 
 There are only a few items, followed by a <code>// can't touch this</code> comment, which the plugin relies on and should be left alone.
 
